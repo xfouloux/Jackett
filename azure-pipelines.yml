@@ -2,8 +2,8 @@
 name: $(majorVersion).$(minorVersion).$(patchVersion)
 variables:
   majorVersion: 0
-  minorVersion: 16
-  patchVersion: $[counter(variables['minorVersion'], 2152)]  # this will reset when we bump minor
+  minorVersion: 116
+  patchVersion: $[counter(variables['minorVersion'], 1)]  # this will reset when we bump minor
   jackettVersion: $(majorVersion).$(minorVersion).$(patchVersion)
   buildConfiguration: Release
   netCoreFramework: netcoreapp3.1
@@ -506,7 +506,7 @@ stages:
     dependsOn:
       - UnitTestJackett
       - Integration
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/cloudproxy'))
     jobs:
       - job: Publish
         workspace:
