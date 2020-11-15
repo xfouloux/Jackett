@@ -346,11 +346,6 @@ stages:
               imageName: windows-latest
               framework: $(netCoreFramework)
               runtime: win-x86
-            macOS:
-              buildDescription: macOS
-              imageName: macOS-latest
-              framework: $(netCoreFramework)
-              runtime: osx-x64
             LinuxAmdx64:
               buildDescription: Linux AMD x64
               imageName: ubuntu-latest
@@ -454,10 +449,6 @@ stages:
               buildDescription: Windows
               imageName: windows-latest
               artifactName: Jackett.Binaries.Windows.zip
-            macOS:
-              buildDescription: macOS
-              imageName: macOS-latest
-              artifactName: Jackett.Binaries.macOS.tar.gz
             LinuxAmdx64:
               buildDescription: Linux AMD x64
               imageName: ubuntu-latest
