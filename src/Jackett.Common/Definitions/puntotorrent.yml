@@ -152,7 +152,7 @@ search:
     - name: re_replace
       args: ["(?i)E(\\d+)", " $1 "]
     - name: re_replace
-      args: ["[^a-zA-Z0-9]+", " "]
+      args: ["[\\.\\-,_\\[\\]\\(\\)]+", " "]
   inputs:
     page: torrents
     $raw: "&category={{ range .Categories }}{{.}};{{end}}"
@@ -331,8 +331,10 @@ search:
     date:
       selector: td:nth-child(5)
       filters:
+        - name: append
+          args: " +01:00" # CET
         - name: dateparse
-          args: "02/01/2006"
+          args: "02/01/2006 -07:00"
     download:
       selector: a[href^="download.php"]
       attribute: href
