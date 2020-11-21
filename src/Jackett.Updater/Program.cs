@@ -333,6 +333,7 @@ namespace Jackett.Updater
                 "Definitions/kapaki.yml",
                 "Definitions/katcrs.yml",
                 "Definitions/kaztorka.yml",
+                "Definitions/kickasstorrent.yml",
                 "Definitions/kikibt.yml",
                 "Definitions/liaorencili.yml",
                 "Definitions/lapausetorrents.yml",
@@ -396,7 +397,6 @@ namespace Jackett.Updater
                 "Definitions/torrentcouch.yml",
                 "Definitions/torrenthane.yml",
                 "Definitions/torrentkim.yml",
-                "Definitions/torrentproject.yml",
                 "Definitions/torrentrex.yml",
                 "Definitions/torrentseed.yml", // renamed to latinop2p #9065
                 "Definitions/torrentseeds.yml", // migrated to c#
@@ -419,6 +419,7 @@ namespace Jackett.Updater
                 "Definitions/waffles.yml",
                 "Definitions/worldofp2p.yml",
                 "Definitions/worldwidetorrents.yml",
+                "Definitions/xfsub.yml",
                 "Definitions/xktorrent.yml",
                 "Definitions/xtremefile.yml",
                 "Definitions/xtremezone.yml", // migrated to C# XtremeZone base tracker
