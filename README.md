@@ -381,7 +381,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * Horror Site
  * HQSource (HQS)
  * HuSh [![(invite needed)][inviteneeded]](#)
- * ICE Torrent
  * IPTorrents (IPT)
  * ImmortalSeed (iS)
  * Immortuos
@@ -466,7 +465,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * RevolutionTT
  * Romanian Metal Torrents (RMT) [![(invite needed)][inviteneeded]](#)
  * RPTorrents
- * SceneFZ
  * SceneHD
  * ScenePalace (SP)
  * SceneRush
@@ -481,6 +479,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * SiamBIT
  * SnowPT (SSPT)
  * SoulVoice [![(invite needed)][inviteneeded]](#)
+ * SpeedApp (SceneFZ, XtreMeZone / MYXZ, ICE Torrent)
  * SpaceTorrent
  * SpeedCD
  * Speedmaster HD
@@ -558,7 +557,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * XWT-Classics
  * XWTorrents (XWT)
  * Xthor
- * XtreMeZone (MYXZ)
  * YDYPT
  * YingK
  * Zamunda.net
