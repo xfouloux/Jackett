@@ -316,7 +316,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * EpubLibre
  * eShareNet
  * eStone (XiDER, BeLoad)
- * Ethor.net (Thor's Land)
  * ExoticaZ (YourExotic)
  * ExtremeBits
  * ExtremeTorrents [![(invite needed)][inviteneeded]](#)
