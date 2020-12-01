@@ -479,7 +479,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * SnowPT (SSPT)
  * SoulVoice [![(invite needed)][inviteneeded]](#)
  * SpeedApp (SceneFZ, XtreMeZone / MYXZ, ICE Torrent)
- * SpaceTorrent
  * SpeedCD
  * Speedmaster HD
  * SpeedTorrent Reloaded
