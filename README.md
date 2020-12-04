@@ -31,6 +31,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * ACGsou (36DM)
  * Anidex
  * AniLibria
+ * AnimeClipse
  * Animedia
  * Anime Tosho
  * AniRena
@@ -45,16 +46,17 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * Byrutor
  * CiliPro (LIAORENCILI)
  * ConCen
- * Corsaro.red
  * cpasbien
  * cpasbienClone
  * Demonoid
  * dmhy
  * E-Hentai
+ * emtrek
  * Epizod
  * ETTV
  * EXT Torrents
  * ExtraTorrent.cd
+ * ExtraTorrent.it
  * EZTV
  * Filebase
  * FireBit
@@ -67,11 +69,10 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * IBit
  * Idope
  * Il CorSaRo Blu
- * Il Corsaro Nero <!-- maintained by bonny1992 -->
+ * Il Corsaro Nero
  * Internet Archive (archive.org)
  * Isohunt2
  * iTorrent
- * KickAssTorrent (KATcr)
  * kickasstorrents (kickass.ws)
  * kickasstorrents.to
  * Legit Torrents
@@ -80,8 +81,8 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * LinuxTracker
  * MacTorrents
  * Magnet4You
- * MagnetDL
- * MejorTorrent <!-- maintained by ivandelabeldad -->
+ * MejorTorrent
+ * MixTapeTorrent
  * Monova
  * MovCr
  * MoviesDVDR
@@ -118,14 +119,14 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * ShizaProject
  * shokweb
  * ShowRSS
- * SkyTorrentsClone
+ * SkyTorrentsClone (*.lol)
+ * SkyTorrentsClone2 (*.to)
  * Solid Torrents
  * sosulki
  * sukebei-Pantsu
  * sukebei.Nyaa.si
  * The Pirate Bay (TPB)
  * Tokyo Tosho
- * TopNow
  * Torlock
  * TOROS
  * Torrent Bomb (토렌트봄)
@@ -141,8 +142,8 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * TorrentKitty
  * TorrentMafya
  * TorrentParadise
+ * TorrentProject
  * TorrentProject2
- * TorrentQuest
  * Torrents.csv
  * Torrentv
  * TorrentView (토렌트뷰)
@@ -153,7 +154,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * UnionDHT
  * VSTHouse
  * VST Torrents
- * XFSUB
  * xxxAdultTorrent
  * xxxtor
  * xxxtorrents
@@ -169,6 +169,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * ArenaBG
  * BaibaKo
  * BookTracker
+ * BootyTape
  * CasStudioTV
  * cool-torrent
  * Darmowe torrenty
@@ -180,13 +181,14 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * Erzsebet.pl
  * ExKinoRay
  * ExtremlymTorrents (XTR)
+ * Genesis-Movement
  * HamsterStudio
  * IV-Torrents
  * KinoNaVse100
  * Kinorun
  * Kinozal
- * Korsar
  * LostFilm.tv
+ * Magnetico (Local DHT) [[site](https://github.com/boramalper/magnetico)]
  * MVGroup Forum
  * MVGroup Main
  * Marine Tracker
@@ -218,7 +220,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * 0day.kiev
  * 1ptbar
  * 2 Fast 4 You
- * 32Pages (32P)
  * 3ChangTrai (3CT) [![(invite needed)][inviteneeded]](#)
  * 3D Torrents (3DT) [![(invite needed)][inviteneeded]](#)
  * 3evils
@@ -338,7 +339,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * Galeriens (LaPauseTorrents)
  * Gay-Torrents.net
  * Gay-Torrents.org [![(invite needed)][inviteneeded]](#)
- * GAYtorrent.ru [![(invite needed)][inviteneeded]](#)
+ * GAYtorrent.ru
  * GazelleGames (GGn) [![(invite needed)][inviteneeded]](#)
  * Generation-Free
  * GigaTorrents
@@ -404,6 +405,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * MaDs Revolution
  * Magico (Trellas)
  * Majomparádé (TurkDepo)
+ * MeseVilág (Fairytale World)
  * MicroBit (µBit)
  * Milkie
  * MMA-Torrents
@@ -412,7 +414,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * MoreThanTV (MTV)
  * Movie Zone (Mz)
  * MyAnonamouse (MAM)
- * myAmity
  * MySpleen [![(invite needed)][inviteneeded]](#)
  * NBTorrents [![(invite needed)][inviteneeded]](#)
  * NCore
@@ -559,6 +560,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * YingK
  * Zamunda.net
  * Zelka.org
+ * ZonaQ
 </details>
 
 Trackers marked with [![(invite needed)][inviteneeded]](#) have no active maintainer and may be missing features or be broken. If you have an invite for them please send it to garfieldsixtynine -at- gmail.com to get them fixed/improved.
