@@ -38,9 +38,13 @@ namespace Jackett.Common.Models.Config
         public bool UpdateDisabled { get; set; }
         public bool UpdatePrerelease { get; set; }
         public string BasePathOverride { get; set; }
+<<<<<<< HEAD
         public bool CacheEnabled { get; set; }
         public long CacheTtl { get; set; }
         public long CacheMaxResultsPerIndexer { get; set; }
+=======
+        public string CloudProxyUrl { get; set; }
+>>>>>>> remotes/abeloin/feature/cloudproxy
         public string OmdbApiKey { get; set; }
         public string OmdbApiUrl { get; set; }
 

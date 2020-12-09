@@ -114,7 +114,7 @@ namespace Jackett.Common.Services
             {
                 var response = await client.GetResultAsync(new WebRequest()
                 {
-                    Url = "https://api.github.com/repos/Jackett/Jackett/releases",
+                    Url = "https://api.github.com/repos/abeloin/Jackett/releases",
                     Encoding = Encoding.UTF8,
                     EmulateBrowser = false
                 });

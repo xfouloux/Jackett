@@ -2,7 +2,11 @@
 name: $(majorVersion).$(minorVersion).$(patchVersion)
 variables:
   majorVersion: 0
+<<<<<<< HEAD
   minorVersion: 17
+=======
+  minorVersion: 116
+>>>>>>> remotes/abeloin/feature/cloudproxy
   patchVersion: $[counter(variables['minorVersion'], 1)]  # this will reset when we bump minor
   jackettVersion: $(majorVersion).$(minorVersion).$(patchVersion)
   buildConfiguration: Release
@@ -13,12 +17,9 @@ variables:
 trigger:
   branches:
     include:
-      - '*'
+      - feature/cloudproxy
 
-pr:
-  branches:
-    include:
-      - '*'
+pr: none
 
 stages:
   - stage: BuildJackett
@@ -349,11 +350,6 @@ stages:
               imageName: windows-latest
               framework: $(netCoreFramework)
               runtime: win-x86
-            macOS:
-              buildDescription: macOS
-              imageName: macOS-latest
-              framework: $(netCoreFramework)
-              runtime: osx-x64
             LinuxAmdx64:
               buildDescription: Linux AMD x64
               imageName: ubuntu-latest
@@ -457,10 +453,6 @@ stages:
               buildDescription: Windows
               imageName: windows-latest
               artifactName: Jackett.Binaries.Windows.zip
-            macOS:
-              buildDescription: macOS
-              imageName: macOS-latest
-              artifactName: Jackett.Binaries.macOS.tar.gz
             LinuxAmdx64:
               buildDescription: Linux AMD x64
               imageName: ubuntu-latest
@@ -518,7 +510,7 @@ stages:
     dependsOn:
       - UnitTestJackett
       - Integration
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/feature/cloudproxy'))
     jobs:
       - job: Publish
         workspace:
@@ -534,7 +526,7 @@ stages:
           - task: GitHubRelease@1
             displayName: Create Github release
             inputs:
-              gitHubConnection: JackettPublish
+              gitHubConnection: github.com_abeloin
               repositoryName: '$(Build.Repository.Name)'
               action: create
               target: $(Build.SourceVersion)
@@ -552,7 +544,7 @@ stages:
             inputs:
               targetType: inline
               script: |
-                $json = Invoke-WebRequest 'https://dev.azure.com/Jackett/Jackett/_apis/build/builds/$(Build.BuildId)/logs?api-version=5.0' | ConvertFrom-Json
+                $json = Invoke-WebRequest 'https://dev.azure.com/alexandrebeloin/Jackett-cloudproxy/_apis/build/builds/$(Build.BuildId)/logs?api-version=5.0' | ConvertFrom-Json
                 $lastTwoLogUrls = $json.value[-1..-2].url
                 foreach($logUrl in $lastTwoLogUrls)
                 {

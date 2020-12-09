@@ -1,22 +1,22 @@
-# Jackett
+# Not Jackett - CloudProxy
 
-[![GitHub issues](https://img.shields.io/github/issues/Jackett/Jackett.svg?maxAge=60&style=flat-square)](https://github.com/Jackett/Jackett/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/Jackett/Jackett.svg?maxAge=60&style=flat-square)](https://github.com/Jackett/Jackett/pulls)
-[![Build Status](https://dev.azure.com/Jackett/Jackett/_apis/build/status/Jackett.Jackett?branchName=master)](https://dev.azure.com/jackett/jackett/_build/latest?definitionId=1&branchName=master)
-[![GitHub Releases](https://img.shields.io/github/downloads/Jackett/Jackett/total.svg?maxAge=60&style=flat-square)](https://github.com/Jackett/Jackett/releases/latest)
-[![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/jackett.svg?maxAge=60&style=flat-square)](https://hub.docker.com/r/linuxserver/jackett/)
-[![Discord](https://img.shields.io/badge/discord-chat-7289DA.svg?maxAge=60&style=flat-square)](https://discord.gg/J865QuA)
+[![GitHub issues](https://img.shields.io/github/issues/abeloin/Jackett.svg?maxAge=60&style=flat-square)](https://github.com/abeloin/Jackett/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/abeloin/Jackett.svg?maxAge=60&style=flat-square)](https://github.com/abeloin/Jackett/pulls)
+[![Build Status](https://dev.azure.com/alexandrebeloin/jackett-cloudproxy/_apis/build/status/abeloin.Jackett?branchName=feature/cloudproxy)](https://dev.azure.com/alexandrebeloin/jackett-cloudproxy/_build/latest?definitionId=1&branchName=feature/cloudproxy)
+[![GitHub Releases](https://img.shields.io/github/downloads/abeloin/Jackett/total.svg?maxAge=60&style=flat-square)](https://github.com/abeloin/Jackett/releases/latest)
 
-This project is a new fork and is recruiting development help.  If you are able to help out please [contact us](https://github.com/Jackett/Jackett/issues/8180).
+## This project is a fork of the official Jackett with [CloudProxy](https://github.com/NoahCardoza/CloudProxy) integration and is unsupported by Jackett.
 
-Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) before submitting any issues or pull requests
+This fork is based on [Jackett POC PR # 9028](https://github.com/Jackett/Jackett/pull/9028)
 
+## See section "Configuring CloudProxy integration" for how to configure [CloudProxy](https://github.com/NoahCardoza/CloudProxy) in Jackett.
+
+### Information
 Jackett works as a proxy server: it translates queries from apps ([Sonarr](https://github.com/Sonarr/Sonarr), [Radarr](https://github.com/Radarr/Radarr), [SickRage](https://sickrage.github.io/), [CouchPotato](https://couchpota.to/), [Mylar](https://github.com/evilhero/mylar), [Lidarr](https://github.com/lidarr/lidarr), [DuckieTV](https://github.com/SchizoDuckie/DuckieTV), [qBittorrent](https://www.qbittorrent.org/), [Nefarious](https://github.com/lardbit/nefarious) etc.) into tracker-site-specific http queries, parses the html response, then sends results back to the requesting software. This allows for getting recent uploads (like RSS) and performing searches. Jackett is a single repository of maintained indexer scraping & translation logic - removing the burden from other apps.
 
-Developer note: The software implements the [Torznab](https://github.com/Sonarr/Sonarr/wiki/Implementing-a-Torznab-indexer) (with hybrid [nZEDb](https://github.com/nZEDb/nZEDb/blob/b485fa326a0ff1f47ce144164eb1f070e406b555/resources/db/schema/data/10-categories.tsv)/[Newznab](https://newznab.readthedocs.io/en/latest/misc/api/#predefined-categories) [category numbering](https://github.com/Jackett/Jackett/wiki/Jackett-Categories)) and [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider) APIs.
+Developer note: The software implements the [Torznab](https://github.com/Sonarr/Sonarr/wiki/Implementing-a-Torznab-indexer) (with [Newznab](https://newznab.readthedocs.io/en/latest/misc/api/#predefined-categories) category numbering) and [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider) APIs.
 
-A third-party Golang SDK for Jackett is available from [webtor-io/go-jackett](https://github.com/webtor-io/go-jackett)
-
+Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) before submitting any issues or pull requests
 
 #### Supported Systems
 * Windows 7SP1 or greater
@@ -643,14 +643,6 @@ If you want to run it with a user without a /home directory you need to add `Env
 
 Mono must be compiled with the Roslyn compiler (default), using MCS will cause "An error has occurred." errors (See https://github.com/Jackett/Jackett/issues/2704).
 
-
-### Installation on Linux via Ansible
-
-On a CentOS/RedHat 7 system: [jewflix.jackett](https://galaxy.ansible.com/jewflix/jackett)
-
-On an Ubuntu 16 system: [chrisjohnson00.jackett](https://galaxy.ansible.com/chrisjohnson00/jackett)
-
-
 ## Installation on macOS
 
 ### Prerequisites
@@ -666,15 +658,6 @@ Logs are stored as usual under `~/.config/Jackett/log.txt`.
 
 ### Run without installing as a service
 Download and extract the latest `Jackett.Binaries.macOS.tar.gz` release from the [releases page](https://github.com/Jackett/Jackett/releases) and run Jackett with the command `./jackett`.
-
-
-## Installation using Docker
-Detailed instructions are available at [LinuxServer.io Jackett Docker](https://hub.docker.com/r/linuxserver/jackett/). The Jackett Docker is highly recommended, especially if you are having Mono stability issues or having issues running Mono on your system e.g. QNAP, Synology. Thanks to [LinuxServer.io](https://linuxserver.io)
-
-
-## Installation on Synology
-Jackett is available as a beta package from [SynoCommunity](https://synocommunity.com/)
-
 
 ## Running Jackett behind a reverse proxy
 When running jackett behind a reverse proxy make sure that the original hostname of the request is passed to Jackett. If HTTPS is used also set the X-Forwarded-Proto header to "https". Don't forget to adjust the "Base path override" Jackett option accordingly.
@@ -704,6 +687,31 @@ location /jackett {
 ## Configuring OMDb
 This feature is used as a fallback (when using the aggregate Indexer) to get the movie/series title if only the IMDB ID is provided in the request.
 To use it, please just request a free API key on [OMDb](http://www.omdbapi.com/apikey.aspx) (1,000 daily requests limit) and paste the key in Jackett
+
+## Configuring CloudProxy integration
+A [CloudProxy](https://github.com/NoahCardoza/CloudProxy) instance is needed for the integration to work properly.
+
+If no Cloudproxy API URL is present, Jackett will only detect Cloudflare protection and not solve them.
+
+Pre-built [CloudProxy](https://github.com/NoahCardoza/CloudProxy) docker image are available on the following website(x86-64, arm32, arm64):
+* https://hub.docker.com/r/noahcardoza/cloudproxy
+* https://github.com/users/NoahCardoza/packages/container/package/cloudproxy
+
+[CloudProxy](https://github.com/NoahCardoza/CloudProxy) default port is 8191. (There's no need to add the /v1 at the end.)
+
+**URL example:**
+* [CloudProxy](https://github.com/NoahCardoza/CloudProxy) is installed on the same machine as Jackett
+  * http://127.0.0.1:8191
+* [CloudProxy](https://github.com/NoahCardoza/CloudProxy) is installed on the same machine as Jackett via docker compose(cloudproxy service name is cloudproxy)
+  * http://cloudproxy:8191
+
+**Cloudproxy integration limitation:**
+
+* Jackett and Cloudproxy must have the same external IP address.
+* Jackett and Cloudproxy must either use IPv4 or IPv6 not both. For example, Jackett(not a docker image) and Cloudproxy(is a docker image), indexer is available on both IPv4 and IPv6 and you have IPv4 and IPv6 addresses. Then Jackett will query the indexer in IPv6 and Cloudproxy in IPv4 resulting in an invalid cookies. The reverse is also possible.
+* May not work properly with hcaptcha page.
+
+For more information about Cloudproxy, please visit: https://github.com/NoahCardoza/CloudProxy
 
 ## Command line switches
 
@@ -796,10 +804,10 @@ dotnet publish Jackett.Server -f net5.0 --self-contained -r linux-x64 -c Debug #
 
 ## Screenshots
 
-![screenshot](https://raw.githubusercontent.com/Jackett/Jackett/master/.github/jackett-screenshot1.png)
+![screenshot](https://raw.githubusercontent.com/abeloin/Jackett/feature/cloudproxy/.github/jackett-screenshot1.png)
 
-![screenshot](https://raw.githubusercontent.com/Jackett/Jackett/master/.github/jackett-screenshot2.png)
+![screenshot](https://raw.githubusercontent.com/abeloin/Jackett/feature/cloudproxy/.github/jackett-screenshot2.png)
 
-![screenshot](https://raw.githubusercontent.com/Jackett/Jackett/master/.github/jackett-screenshot3.png)
+![screenshot](https://raw.githubusercontent.com/abeloin/Jackett/feature/cloudproxy/.github/jackett-screenshot3.png)
 
-[inviteneeded]: https://raw.githubusercontent.com/Jackett/Jackett/master/.github/label-inviteneeded.png
+[inviteneeded]: https://raw.githubusercontent.com/abeloin/Jackett/feature/cloudproxy/.github/label-inviteneeded.png
