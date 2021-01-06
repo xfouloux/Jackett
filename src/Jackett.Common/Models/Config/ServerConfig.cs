@@ -17,7 +17,12 @@ namespace Jackett.Common.Models.Config
             Port = 9117;
             AllowExternal = Environment.OSVersion.Platform == PlatformID.Unix;
             CacheEnabled = true;
+<<<<<<< HEAD
             CacheTtl = 600; // 10 minutes
+=======
+            // Sonarr 15min, Radarr 60min, LazyLibrarian 20min, Readarr 15min, Lidarr = 15min
+            CacheTtl = 2100; // 35 minutes is a reasonable value for all of them and to avoid race conditions
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
             CacheMaxResultsPerIndexer = 1000;
             RuntimeSettings = runtimeSettings;
         }
@@ -39,12 +44,19 @@ namespace Jackett.Common.Models.Config
         public bool UpdatePrerelease { get; set; }
         public string BasePathOverride { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
         public bool CacheEnabled { get; set; }
         public long CacheTtl { get; set; }
         public long CacheMaxResultsPerIndexer { get; set; }
 =======
         public string CloudProxyUrl { get; set; }
 >>>>>>> remotes/abeloin/feature/cloudproxy
+=======
+        public bool CacheEnabled { get; set; }
+        public long CacheTtl { get; set; }
+        public long CacheMaxResultsPerIndexer { get; set; }
+        public string FlareSolverrUrl { get; set; }
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
         public string OmdbApiKey { get; set; }
         public string OmdbApiUrl { get; set; }
 

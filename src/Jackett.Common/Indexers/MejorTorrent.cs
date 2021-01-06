@@ -36,6 +36,7 @@ namespace Jackett.Common.Indexers
         private const string SearchUrl = "secciones.php";
 
         public override string[] LegacySiteLinks { get; protected set; } = {
+            "https://www.mejortorrentt.net/",
             "http://www.mejortorrent.org/",
             "http://www.mejortorrent.tv/",
             "http://www.mejortorrentt.com/",
@@ -48,7 +49,7 @@ namespace Jackett.Common.Indexers
             : base(id: "mejortorrent",
                    name: "MejorTorrent",
                    description: "MejorTorrent - Hay veces que un torrent viene mejor! :)",
-                   link: "https://www.mejortorrentt.net/",
+                   link: "https://www.mejortorrents.net/",
                    caps: new TorznabCapabilities
                    {
                        TvSearchParams = new List<TvSearchParam>
@@ -78,6 +79,8 @@ namespace Jackett.Common.Indexers
             var matchWords = new BoolItem { Name = "Match words in title", Value = true };
             configData.AddDynamic("MatchWords", matchWords);
 
+            configData.AddDynamic("flaresolverr", new DisplayItem("This site may use Cloudflare DDoS Protection, therefore Jackett requires <a href=\"https://github.com/Jackett/Jackett#configuring-flaresolverr\" target=\"_blank\">FlareSolver</a> to access it."){ Name = "FlareSolverr"});
+
             AddCategoryMapping(MejorTorrentCatType.Pelicula, TorznabCatType.Movies, "Pelicula");
             AddCategoryMapping(MejorTorrentCatType.Serie, TorznabCatType.TVSD, "Serie");
             AddCategoryMapping(MejorTorrentCatType.SerieHd, TorznabCatType.TVHD, "Serie HD");
@@ -88,7 +91,7 @@ namespace Jackett.Common.Indexers
 
         public override async Task<IndexerConfigurationStatus> ApplyConfiguration(JToken configJson)
         {
-            configData.LoadValuesFromJson(configJson);
+            LoadValuesFromJson(configJson);
             var releases = await PerformQuery(new TorznabQuery());
 
             await ConfigureIfOK(string.Empty, releases.Any(), () =>
@@ -129,7 +132,18 @@ namespace Jackett.Common.Indexers
             if (result.Status != HttpStatusCode.OK)
                 throw new ExceptionWithConfigData(result.ContentString, configData);
             dom = parser.ParseDocument(result.ContentString);
-            downloadUrl = SiteLink + dom.QuerySelector("a[href^=\"/tor/\"]").GetAttribute("href");
+
+            // There are several types of download links
+            // 1. Direct link https://www.mejortorrentt.net/tor/peliculas/Harry_Potter_1_y_la_Piedra_Filosofal_MicroHD_1080p.torrent
+            var selector = dom.QuerySelector("a[href^=\"/tor/\"]");
+            if (selector != null)
+                downloadUrl = SiteLink + selector.GetAttribute("href");
+            else
+            {
+                // 2. Hidden link onclick="post('https://cdn1.mejortorrents.net/torrents/xcceijidcd', {table: 'peliculas', name: 'Harry_Potter_1_y_la_Piedra_Filosofal_MicroHD_1080p.torrent'});"
+                var onClickParts = dom.QuerySelector("a[onclick*=\"/torrent\"]").GetAttribute("onclick").Split('\'');
+                downloadUrl = $"{SiteLink}tor/{onClickParts[3]}/{onClickParts[5]}";
+            }
 
             // Eg https://www.mejortorrentt.net/tor/peliculas/Harry_Potter_1_y_la_Piedra_Filosofal_MicroHD_1080p.torrent
             var content = await base.Download(new Uri(downloadUrl));

@@ -79,6 +79,8 @@ namespace Jackett.Common.Indexers
             var matchWords = new BoolItem { Name = "Match words in title", Value = true };
             configData.AddDynamic("MatchWords", matchWords);
 
+            configData.AddDynamic("flaresolverr", new DisplayItem("This site may use Cloudflare DDoS Protection, therefore Jackett requires <a href=\"https://github.com/Jackett/Jackett#configuring-flaresolverr\" target=\"_blank\">FlareSolver</a> to access it."){ Name = "FlareSolverr"});
+
             AddCategoryMapping(DivxTotalCategories.Peliculas, TorznabCatType.MoviesSD, "Peliculas");
             AddCategoryMapping(DivxTotalCategories.PeliculasHd, TorznabCatType.MoviesHD, "Peliculas HD");
             AddCategoryMapping(DivxTotalCategories.Peliculas3D, TorznabCatType.Movies3D, "Peliculas 3D");
@@ -90,7 +92,7 @@ namespace Jackett.Common.Indexers
 
         public override async Task<IndexerConfigurationStatus> ApplyConfiguration(JToken configJson)
         {
-            configData.LoadValuesFromJson(configJson);
+            LoadValuesFromJson(configJson);
             var releases = await PerformQuery(new TorznabQuery());
 
             await ConfigureIfOK(string.Empty, releases.Any(), () =>

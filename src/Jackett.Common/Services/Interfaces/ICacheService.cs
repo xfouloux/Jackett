@@ -10,5 +10,9 @@ namespace Jackett.Common.Services.Interfaces
         void CacheResults(IIndexer indexer, TorznabQuery query, List<ReleaseInfo> releases);
         List<TrackerCacheResult> GetCachedResults();
         void CleanIndexerCache(IIndexer indexer);
+<<<<<<< HEAD
+=======
+        void CleanCache();
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
     }
 }

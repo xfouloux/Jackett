@@ -14,6 +14,10 @@
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="AutoMapper" Version="8.1.1" />
     <PackageReference Include="BencodeNET" Version="3.1.4" />
+<<<<<<< HEAD
+=======
+    <PackageReference Include="FlareSolverrSharp" Version="1.2.1" />
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
     <PackageReference Include="DotNet4.SocksProxy" Version="1.4.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />

@@ -36,9 +36,11 @@ namespace Jackett.Common.Services
         // use: {"<old id>", "<new id>"}
         private readonly Dictionary<string, string> renamedIndexers = new Dictionary<string, string>
         {
+            {"ast4u", "animeworld"},
             {"broadcastthenet", "broadcasthenet"},
             {"cili180", "cilipro"},
             {"icetorrent", "speedapp"},
+            {"leaguehd", "lemonhd"},
             {"liaorencili", "cilipro"},
             {"metaliplayro", "romanianmetaltorrents"},
             {"nnm-club", "noname-club"},
@@ -135,7 +137,7 @@ namespace Jackett.Common.Services
                 indexers.Add(indexer.Id, indexer);
                 configService.Load(indexer);
             }
- 
+
             logger.Info($"Loaded {nativeIndexers.Count} Native indexers: {string.Join(", ", nativeIndexers.Select(i => i.Id))}");
         }
 

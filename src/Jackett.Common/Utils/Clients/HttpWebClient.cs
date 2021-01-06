@@ -8,7 +8,11 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using YetAnotherCloudProxySharp;
+=======
+using FlareSolverrSharp;
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
 using Jackett.Common.Helpers;
 using Jackett.Common.Models.Config;
 using Jackett.Common.Services.Interfaces;
@@ -75,12 +79,19 @@ namespace Jackett.Common.Utils.Clients
                     cookies.Add(cookieUrl, new Cookie(kv.Key, kv.Value));
             }
 
+<<<<<<< HEAD
             var userAgent = webRequest.EmulateBrowser.Value ? BrowserUtil.ChromeUserAgent : "Jackett/" + configService.GetVersion();
 
             using (var clearanceHandlr = new ClearanceHandler(serverConfig.CloudProxyUrl))
             {
                 clearanceHandlr.UserAgent = userAgent;
                 clearanceHandlr.MaxTimeout = 60000;
+=======
+            using (var clearanceHandlr = new ClearanceHandler(serverConfig.FlareSolverrUrl))
+            {
+                clearanceHandlr.UserAgent = BrowserUtil.ChromeUserAgent;
+                clearanceHandlr.MaxTimeout = 50000;
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
                 using (var clientHandlr = new HttpClientHandler
                 {
                     CookieContainer = cookies,
@@ -94,12 +105,6 @@ namespace Jackett.Common.Utils.Clients
                     clearanceHandlr.InnerHandler = clientHandlr;
                     using (var client = new HttpClient(clearanceHandlr))
                     {
-                        if (webRequest.EmulateBrowser == true)
-                            client.DefaultRequestHeaders.Add("User-Agent", BrowserUtil.ChromeUserAgent);
-                        else
-                            client.DefaultRequestHeaders.Add("User-Agent", "Jackett/" + configService.GetVersion());
-
-                        HttpResponseMessage response = null;
                         using (var request = new HttpRequestMessage())
                         {
                             request.Headers.ExpectContinue = false;
@@ -114,6 +119,15 @@ namespace Jackett.Common.Utils.Clients
                                         request.Headers.TryAddWithoutValidation(header.Key, header.Value);
                                     }
                                 }
+                            }
+
+                            // The User-Agent can be set by the indexer (in the headers)
+                            if (string.IsNullOrWhiteSpace(request.Headers.UserAgent.ToString()))
+                            {
+                                if (webRequest.EmulateBrowser == true)
+                                    request.Headers.UserAgent.ParseAdd(BrowserUtil.ChromeUserAgent);
+                                else
+                                    request.Headers.UserAgent.ParseAdd("Jackett/" + configService.GetVersion());
                             }
 
                             if (!string.IsNullOrEmpty(webRequest.Referer))
@@ -144,6 +158,7 @@ namespace Jackett.Common.Utils.Clients
                                 request.Method = HttpMethod.Get;
                             }
 
+                            HttpResponseMessage response;
                             using (response = await client.SendAsync(request))
                             {
                                 var result = new WebResult

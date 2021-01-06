@@ -92,7 +92,8 @@ namespace Jackett.Common.Indexers
             AddCategoryMapping(50, TorznabCatType.MoviesHD, "FiLMS HD - 720P");
             AddCategoryMapping(49, TorznabCatType.MoviesBluRay, "FiLMS HD - BluRay");
             AddCategoryMapping(78, TorznabCatType.MoviesHD, "FiLMS HD - HDRip");
-            AddCategoryMapping(95, TorznabCatType.Movies, "FiLMS HD - VOSTFR");
+            AddCategoryMapping(105, TorznabCatType.MoviesUHD, "FiLMS HD - VOSTFR 4k");
+            AddCategoryMapping(95, TorznabCatType.MoviesHD, "FiLMS HD - VOSTFR HD");
             AddCategoryMapping(85, TorznabCatType.MoviesHD, "FiLMS HD - x265");
 
             AddCategoryMapping(7, TorznabCatType.Movies, "FiLMS SD");
@@ -159,7 +160,7 @@ namespace Jackett.Common.Indexers
 
         public override async Task<IndexerConfigurationStatus> ApplyConfiguration(JToken configJson)
         {
-            configData.LoadValuesFromJson(configJson);
+            LoadValuesFromJson(configJson);
 
             var pairs = new Dictionary<string, string>
             {

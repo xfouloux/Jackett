@@ -8,7 +8,10 @@ using Jackett.Common.Indexers;
 using Jackett.Common.Models;
 using Jackett.Common.Models.Config;
 using Jackett.Common.Services.Interfaces;
+<<<<<<< HEAD
 using Jint.Parser;
+=======
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
 using NLog;
 
 namespace Jackett.Common.Services
@@ -25,6 +28,11 @@ namespace Jackett.Common.Services
     ///     before testing the configuration
     ///   * When there is some error/exception in the indexer => The results are not cached so we can retry in the
     ///     next request
+<<<<<<< HEAD
+=======
+    ///   * When the user changes proxy configuration => We call CleanCache to remove all cached results. The user will
+    ///     be able to test the proxy
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
     /// * We want to limit the memory usage, so we try to remove elements from cache ASAP:
     ///   * Each indexer can have a maximum number of results in memory. If the limit is exceeded we remove old results
     ///   * Cached results expire after some time
@@ -36,6 +44,7 @@ namespace Jackett.Common.Services
         private readonly ServerConfig _serverConfig;
         private readonly SHA256Managed _sha256 = new SHA256Managed();
         private readonly Dictionary<string, TrackerCache> _cache = new Dictionary<string, TrackerCache>();
+<<<<<<< HEAD
 
         public CacheService(Logger logger, ServerConfig serverConfig)
         {
@@ -45,6 +54,17 @@ namespace Jackett.Common.Services
 
         public void CacheResults(IIndexer indexer, TorznabQuery query, List<ReleaseInfo> releases)
         {
+=======
+
+        public CacheService(Logger logger, ServerConfig serverConfig)
+        {
+            _logger = logger;
+            _serverConfig = serverConfig;
+        }
+
+        public void CacheResults(IIndexer indexer, TorznabQuery query, List<ReleaseInfo> releases)
+        {
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
             // do not cache test queries!
             if (query.IsTest)
                 return; 
@@ -78,6 +98,7 @@ namespace Jackett.Common.Services
 
                 _logger.Debug($"CACHE CacheResults / Indexer: {trackerCache.TrackerId} / Added: {releases.Count} releases");
 
+<<<<<<< HEAD
                 PruneCacheByMaxResultsPerIndexer(); // remove old results if we exceed the maximum limit
             }
         }
@@ -107,10 +128,49 @@ namespace Jackett.Common.Services
         }
 
         public List<TrackerCacheResult> GetCachedResults()
+=======
+                PruneCacheByMaxResultsPerIndexer(trackerCache); // remove old results if we exceed the maximum limit
+            }
+        }
+
+        public List<ReleaseInfo> Search(IIndexer indexer, TorznabQuery query)
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
         {
             lock (_cache)
             {
                 if (!IsCacheEnabled())
+<<<<<<< HEAD
+=======
+                    return null;
+
+                PruneCacheByTtl(); // remove expired results
+
+                if (!_cache.ContainsKey(indexer.Id))
+                    return null;
+ 
+                var trackerCache = _cache[indexer.Id];
+                var queryHash = GetQueryHash(query);
+                var cacheHit = trackerCache.Queries.ContainsKey(queryHash);
+
+                if (_logger.IsDebugEnabled)
+                    _logger.Debug($"CACHE Search / Indexer: {trackerCache.TrackerId} / CacheHit: {cacheHit} / Query: {GetSerializedQuery(query)}");
+
+                if (!cacheHit)
+                    return null;
+
+                var releases = trackerCache.Queries[queryHash].Results;
+                _logger.Debug($"CACHE Search Hit / Indexer: {trackerCache.TrackerId} / Found: {releases.Count} releases");
+
+                return releases;
+            }
+        }
+
+        public List<TrackerCacheResult> GetCachedResults()
+        {
+            lock (_cache)
+            {
+                if (!IsCacheEnabled())
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
                     return new List<TrackerCacheResult>();
 
                 PruneCacheByTtl(); // remove expired results
@@ -149,6 +209,7 @@ namespace Jackett.Common.Services
             {
                 if (!IsCacheEnabled())
                     return;
+<<<<<<< HEAD
 
                 if (_cache.ContainsKey(indexer.Id))
                     _cache.Remove(indexer.Id);
@@ -212,16 +273,113 @@ namespace Jackett.Common.Services
             if (_logger.IsDebugEnabled)
             {
                 _logger.Debug($"CACHE PruneCacheByMaxResultsPerIndexer / Pruned queries: {prunedCounter}");
+=======
+
+                if (_cache.ContainsKey(indexer.Id))
+                    _cache.Remove(indexer.Id);
+
+                _logger.Debug($"CACHE CleanIndexerCache / Indexer: {indexer.Id}");
+
+                PruneCacheByTtl(); // remove expired results
+            }
+        }
+
+        public void CleanCache()
+        {
+            lock (_cache)
+            {
+                if (!IsCacheEnabled())
+                    return;
+
+                _cache.Clear();
+                _logger.Debug("CACHE CleanCache");
+            }
+        }
+
+        private bool IsCacheEnabled()
+        {
+            if (!_serverConfig.CacheEnabled)
+            {
+                // remove cached results just in case user disabled cache recently
+                _cache.Clear();
+                _logger.Debug("CACHE IsCacheEnabled => false");
+            } 
+            return _serverConfig.CacheEnabled;
+        }
+
+        private void PruneCacheByTtl()
+        {
+            var prunedCounter = 0;
+            var expirationDate = DateTime.Now.AddSeconds(-_serverConfig.CacheTtl);
+            foreach (var trackerCache in _cache.Values)
+            {
+                // Remove expired queries
+                var queriesToRemove = trackerCache.Queries
+                    .Where(q => q.Value.Created < expirationDate)
+                    .Select(q => q.Key).ToList();
+                foreach (var queryHash in queriesToRemove)
+                    trackerCache.Queries.Remove(queryHash);
+                prunedCounter += queriesToRemove.Count;
+            }
+            if (_logger.IsDebugEnabled)
+            {
+                _logger.Debug($"CACHE PruneCacheByTtl / Pruned queries: {prunedCounter}");
+                PrintCacheStatus();
+            }
+        }
+
+        private void PruneCacheByMaxResultsPerIndexer(TrackerCache trackerCache)
+        {
+            // Remove queries exceeding max results per indexer
+            var resultsPerQuery = trackerCache.Queries
+                .OrderByDescending(q => q.Value.Created) // newest first
+                .Select(q => new Tuple<string, int>(q.Key, q.Value.Results.Count)).ToList();
+
+            var prunedCounter = 0;
+            while (true)
+            {
+                var total = resultsPerQuery.Select(q => q.Item2).Sum();
+                if (total <= _serverConfig.CacheMaxResultsPerIndexer)
+                    break;
+                var olderQuery = resultsPerQuery.Last();
+                trackerCache.Queries.Remove(olderQuery.Item1); // remove the older
+                resultsPerQuery.Remove(olderQuery);
+                prunedCounter++;
+            }
+
+            if (_logger.IsDebugEnabled)
+            {
+                _logger.Debug($"CACHE PruneCacheByMaxResultsPerIndexer / Indexer: {trackerCache.TrackerId} / Pruned queries: {prunedCounter}");
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
                 PrintCacheStatus();
             }
         }
 
         private string GetQueryHash(TorznabQuery query)
         {
+<<<<<<< HEAD
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(query);
             return BitConverter.ToString(_sha256.ComputeHash(Encoding.ASCII.GetBytes(json)));
         }
         
+=======
+            var json = GetSerializedQuery(query);
+            // Compute the hash
+            return BitConverter.ToString(_sha256.ComputeHash(Encoding.ASCII.GetBytes(json)));
+        }
+
+        private static string GetSerializedQuery(TorznabQuery query)
+        {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(query);
+
+            // Changes in the query to improve cache hits
+            // Both request must return the same results, if not we are breaking Jackett search
+            json = json.Replace("\"SearchTerm\":null", "\"SearchTerm\":\"\"");
+
+            return json;
+        }
+
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
         private void PrintCacheStatus()
         {
             _logger.Debug($"CACHE Status / Total cached results: {_cache.Values.SelectMany(tc => tc.Queries).Select(q => q.Value.Results.Count).Sum()}");

@@ -128,7 +128,7 @@ namespace Jackett.Common.Indexers
             IProtectionService ps = null;
             if (useProtectionService)
                 ps = protectionService;
-            configData.LoadValuesFromJson(jsonConfig, ps);
+            configData.LoadConfigDataValuesFromJson(jsonConfig, ps);
             if (string.IsNullOrWhiteSpace(configData.SiteLink.Value))
             {
                 configData.SiteLink.Value = DefaultSiteLink;
@@ -220,29 +220,7 @@ namespace Jackett.Common.Indexers
                 catch (Exception ex)
                 {
                     if (ex.Message != "The provided payload cannot be decrypted because it was not protected with this protection provider.")
-                    {
                         logger.Info($"Password could not be unprotected using Microsoft.AspNetCore.DataProtection - {Id} : " + ex);
-                    }
-
-                    logger.Info($"Attempting legacy Unprotect - {Id} : ");
-
-                    try
-                    {
-                        var unprotectedPassword = protectionService.LegacyUnProtect(passwordValue);
-                        //Password successfully unprotected using Windows/Mono DPAPI
-
-                        passwordPropertyValue.Value = unprotectedPassword;
-                        SaveConfig();
-                        IsConfigured = true;
-
-                        logger.Info($"Password successfully migrated for {Id}");
-
-                        return true;
-                    }
-                    catch (Exception exception)
-                    {
-                        logger.Info($"Password could not be unprotected using legacy DPAPI - {Id} : " + exception);
-                    }
                 }
             }
 
@@ -305,6 +283,17 @@ namespace Jackett.Common.Indexers
                 // generate info hash from magnet link
                 if (r.MagnetUri != null && string.IsNullOrWhiteSpace(r.InfoHash))
                     r.InfoHash = MagnetUtil.MagnetToInfoHash(r.MagnetUri);
+
+                // set guid
+                if (r.Guid == null)
+                {
+                    if (r.Details != null)
+                        r.Guid = r.Details;
+                    else if (r.Link != null)
+                        r.Guid = r.Link;
+                    else if (r.MagnetUri != null)
+                        r.Guid = r.MagnetUri;
+                }
 
                 return r;
             });

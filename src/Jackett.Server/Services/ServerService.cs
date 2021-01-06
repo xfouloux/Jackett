@@ -139,7 +139,11 @@ namespace Jackett.Server.Services
 
                 logger.Info($"Using proxy: {config.ProxyType}");
 
+<<<<<<< HEAD
                 logger.Info("Using CloudProxy: " + (string.IsNullOrEmpty(config.CloudProxyUrl) ? "No" : config.CloudProxyUrl));
+=======
+                logger.Info("Using FlareSolverr: " + (string.IsNullOrEmpty(config.FlareSolverrUrl) ? "No" : config.FlareSolverrUrl));
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
 
                 var monotype = Type.GetType("Mono.Runtime");
                 if (monotype != null && !DotNetCoreUtil.IsRunningOnDotNetCore)

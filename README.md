@@ -16,10 +16,13 @@ Jackett works as a proxy server: it translates queries from apps ([Sonarr](https
 
 Developer note: The software implements the [Torznab](https://github.com/Sonarr/Sonarr/wiki/Implementing-a-Torznab-indexer) (with [Newznab](https://newznab.readthedocs.io/en/latest/misc/api/#predefined-categories) category numbering) and [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider) APIs.
 
+<<<<<<< HEAD
 Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) before submitting any issues or pull requests
 
+=======
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
 #### Supported Systems
-* Windows 7SP1 or greater
+* Windows 7 SP1 or greater
 * Linux [supported operating systems here](https://github.com/dotnet/core/blob/master/release-notes/5.0/5.0-supported-os.md#linux)
 * macOS 10.13 or greater
 
@@ -171,7 +174,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * BookTracker
  * BootyTape
  * CasStudioTV
- * cool-torrent
  * Darmowe torrenty
  * Deildu
  * DimeADozen (EzTorrent)
@@ -235,12 +237,11 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * AmigosShareClub
  * AnimeBytes (AB)
  * AnimeTorrents (AnT)
+ * AnimeWorld (AST4u) [![(invite needed)][inviteneeded]](#)
  * Anthelion
  * Araba Fenice (Phoenix) [![(invite needed)][inviteneeded]](#)
  * ArabP2P
- * Asgaard (AG)
  * AsianCinema
- * AST4u [![(invite needed)][inviteneeded]](#)
  * Asylum Share
  * AudioNews (AN)
  * Audiobook Torrents (ABT + RNS)
@@ -271,7 +272,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * BroadCity [![(invite needed)][inviteneeded]](#)
  * BroadcasTheNet (BTN)
  * BrokenStones [![(invite needed)][inviteneeded]](#)
- * BTGigs (TG) [![(invite needed)][inviteneeded]](#)
  * BTNext (BTNT)
  * BTSCHOOL
  * BWTorrents
@@ -394,7 +394,7 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * LatinoP2P
  * Le Saloon
  * LeChaudron
- * LeagueHD
+ * LemonHD
  * LearnFlakes
  * LegacyHD (HD4Free)
  * Libble
@@ -473,7 +473,6 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * SDBits [![(invite needed)][inviteneeded]](#)
  * Secret Cinema
  * SeedFile (SF)
- * ShareUniversity
  * Shareisland
  * Shazbat
  * Shellife (SL) [![(invite needed)][inviteneeded]](#)
@@ -489,14 +488,12 @@ Please see our [troubleshooting and contributing guidelines](CONTRIBUTING.md) be
  * SportsCult
  * SpringSunday
  * Superbits (SBS)
- * TakeaByte
  * Tapochek
  * Tasmanit [![(invite needed)][inviteneeded]](#)
  * TeamHD
  * TeamOS
  * TEKNO3D [![(invite needed)][inviteneeded]](#)
  * TellyTorrent
- * TenYardTorrents (TYT) [![(invite needed)][inviteneeded]](#)
  * The Falling Angels (TFA)
  * The Geeks [![(invite needed)][inviteneeded]](#)
  * The Horror Charnel (THC)
@@ -684,6 +681,20 @@ location /jackett {
 }
 ```
 
+## Search Cache
+Jackett has an internal cache to increase search speed and to reduce the number of requests to the torrent sites.
+The default values should be good for most users. If you have problems, you can reduce the TTL value in the
+configuration or even disable the cache. Keep in mind that you can be banned by the sites if you make a lot of requests.
+* **Cache TTL (seconds)**: (default 2100 / 35 minutes) It indicates how long the results can remain in the cache.
+* **Cache max results per indexer**: (default 1000) How many results are kept in cache for each indexer. This limit is used to limit the use of RAM. If you make many requests and you have enough memory, increase this number.
+
+## Configuring FlareSolverr
+Some indexers are protected by CloudFlare or similar services and Jackett is not able to solve the challenges.
+For these cases, [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) has been integrated into Jackett. This service is in charge of solving the challenges and configuring Jackett with the necessary cookies.
+Setting up this service is optional, most indexers don't need it.
+* Install FlareSolverr service (following their instructions)
+* Configure **FlareSolverr API URL** in Jackett. For example: http://172.17.0.2:8191
+
 ## Configuring OMDb
 This feature is used as a fallback (when using the aggregate Indexer) to get the movie/series title if only the IMDB ID is provided in the request.
 To use it, please just request a free API key on [OMDb](http://www.omdbapi.com/apikey.aspx) (1,000 daily requests limit) and paste the key in Jackett
@@ -733,9 +744,6 @@ For more information about Cloudproxy, please visit: https://github.com/NoahCard
 
 -   `-c, --UseClient`          Override web client selection.
                             [automatic(Default)/httpclient/httpclient2]
-
--   `-j, --ProxyConnection`    use proxy - e.g. 127.0.0.1:8888
-
 
 -   `-x, --ListenPublic`       Listen publicly
 

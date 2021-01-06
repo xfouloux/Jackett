@@ -27,10 +27,17 @@ namespace Jackett.Common.Indexers
 
         public override string[] AlternativeSiteLinks { get; protected set; } = {
             "https://www.cinecalidad.is/",
-            "https://www.cinecalidad.to/",
-            "https://www.cinecalidad.eu/"
+            "https://www.cinecalidad.eu/",
+            "https://www.cinecalidad.im/"
         };
 
+<<<<<<< HEAD
+=======
+        public override string[] LegacySiteLinks { get; protected set; } = {
+            "https://www.cinecalidad.to/"
+        };
+
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
         public Cinecalidad(IIndexerConfigurationService configService, WebClient wc, Logger l, IProtectionService ps,
             ICacheService cs)
             : base(id: "cinecalidad",
@@ -138,6 +145,7 @@ namespace Jackett.Common.Indexers
                     var linkParts = protectedLink.Split('=');
                     protectedLink = protectedLink.Replace(linkParts[0] + "=", "");
                 }
+                protectedLink = GetAbsoluteUrl(protectedLink);
 
                 results = await RequestWithCookiesAsync(protectedLink);
                 dom = parser.ParseDocument(results.ContentString);
@@ -173,8 +181,8 @@ namespace Jackett.Common.Indexers
                     title += _language.Equals("castellano") ? " MULTi/SPANiSH" : " MULTi/LATiN SPANiSH";
                     title += " 1080p BDRip x264";
 
-                    var poster = new Uri(qImg.GetAttribute("src"));
-                    var link = new Uri(row.QuerySelector("a").GetAttribute("href"));
+                    var poster = new Uri(GetAbsoluteUrl(qImg.GetAttribute("src")));
+                    var link = new Uri(GetAbsoluteUrl(row.QuerySelector("a").GetAttribute("href")));
 
                     var release = new ReleaseInfo
                     {
@@ -219,6 +227,14 @@ namespace Jackett.Common.Indexers
             titleWords = titleWords.ToArray();
 
             return queryWords.All(word => titleWords.Contains(word));
+        }
+
+        private string GetAbsoluteUrl(string url)
+        {
+            url = url.Trim();
+            if (!url.StartsWith("http"))
+                return SiteLink + url.TrimStart('/');
+            return url;
         }
     }
 

@@ -10,9 +10,8 @@ links:
   - https://torrentgalaxy.to/
   - https://torrentgalaxy.mx/
   - https://torrentgalaxy.su/
-  - https://torrentgalaxy.root.yt/
   - https://torrentgalaxy.unblockninja.com/
-  - https://torrentgalaxy.unblockit.app/
+  - https://torrentgalaxy.unblockit.dev/
   - https://tgx.unblocked.rest/
 legacylinks:
   - https://torrentgalaxy.org/ # redirects to *.to
@@ -33,6 +32,8 @@ legacylinks:
   - https://tgx.uk-unblock.pro/
   - https://torrentgalaxy.unblockit.top/
   - https://torrentgalaxy.unblockit.lat/
+  - https://torrentgalaxy.unblockit.app/
+  - https://torrentgalaxy.root.yt/
 
 caps:
   categorymappings:
@@ -124,7 +125,7 @@ search:
     order: "{{ .Config.type }}"
 
   rows:
-    selector: div[class="tgxtablerow"]
+    selector: div.tgxtable > div:has(div[class="tgxtablecell shrink"])
 
   fields:
     category:
@@ -165,13 +166,13 @@ search:
     date:
       # 20Mins ago
       optional: true
-      selector: div.tgxtablecell:last-of-type:contains("ago")
+      selector: div td:last-of-type:contains("ago")
       filters:
         - name: timeago
     date:
       # 24/12/18 13:55
       optional: true
-      selector: div.tgxtablecell:last-of-type small:contains(":")
+      selector: div td:last-of-type small:contains(":")
       filters:
         - name: append
           args: " -07:00" # PDT

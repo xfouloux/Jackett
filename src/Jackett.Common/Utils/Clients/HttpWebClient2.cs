@@ -8,7 +8,11 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< HEAD
 using YetAnotherCloudProxySharp;
+=======
+using FlareSolverrSharp;
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
 using Jackett.Common.Helpers;
 using Jackett.Common.Models.Config;
 using Jackett.Common.Services.Interfaces;
@@ -54,10 +58,17 @@ namespace Jackett.Common.Utils.Clients
 
         public void CreateClient()
         {
+<<<<<<< HEAD
             clearanceHandlr = new ClearanceHandler(serverConfig.CloudProxyUrl)
             {
                 UserAgent = BrowserUtil.ChromeUserAgent,
                 MaxTimeout = 60000
+=======
+            clearanceHandlr = new ClearanceHandler(serverConfig.FlareSolverrUrl)
+            {
+                UserAgent = BrowserUtil.ChromeUserAgent,
+                MaxTimeout = 50000
+>>>>>>> a983537cc90fd4e95b6c94969ff72e816ae37821
             };
             clientHandlr = new HttpClientHandler
             {
@@ -104,11 +115,6 @@ namespace Jackett.Common.Utils.Clients
             request.Headers.ExpectContinue = false;
             request.RequestUri = new Uri(webRequest.Url);
 
-            if (webRequest.EmulateBrowser == true)
-                request.Headers.UserAgent.ParseAdd(BrowserUtil.ChromeUserAgent);
-            else
-                request.Headers.UserAgent.ParseAdd("Jackett/" + configService.GetVersion());
-
             // clear cookies from cookiecontainer
             var oldCookies = cookies.GetCookies(request.RequestUri);
             foreach (Cookie oldCookie in oldCookies)
@@ -133,6 +139,15 @@ namespace Jackett.Common.Utils.Clients
                         request.Headers.TryAddWithoutValidation(header.Key, header.Value);
                     }
                 }
+            }
+
+            // The User-Agent can be set by the indexer (in the headers)
+            if (string.IsNullOrWhiteSpace(request.Headers.UserAgent.ToString()))
+            {
+                if (webRequest.EmulateBrowser == true)
+                    request.Headers.UserAgent.ParseAdd(BrowserUtil.ChromeUserAgent);
+                else
+                    request.Headers.UserAgent.ParseAdd("Jackett/" + configService.GetVersion());
             }
 
             if (!string.IsNullOrEmpty(webRequest.Referer))
